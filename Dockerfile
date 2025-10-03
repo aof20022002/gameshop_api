@@ -1,5 +1,5 @@
-# Stage 1: Build
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# ใช้ .NET 9.0 SDK สำหรับ build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # copy csproj และ restore
@@ -8,15 +8,16 @@ RUN dotnet restore
 
 # copy source ทั้งหมด
 COPY . ./
-RUN dotnet publish -c Release -o /app
+RUN dotnet publish -c Release -o /app/publish
 
-# Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+# ใช้ .NET 9.0 Runtime สำหรับรัน
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-COPY --from=build /app ./
+COPY --from=build /app/publish .
 
-# Render จะส่ง $PORT มาเป็น env variable
-ENV ASPNETCORE_URLS=http://+:$PORT
-EXPOSE 8080
+# เปิด Swagger ใน Production
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS=http://+:10000
 
+EXPOSE 10000
 ENTRYPOINT ["dotnet", "gameshop_api.dll"]

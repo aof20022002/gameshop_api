@@ -1,21 +1,22 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Register services
-builder.Services.AddOpenApi();
+// Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Urls.Add($"http://*:{port}");
+// **สำคัญ: เปิด Swagger ทุก Environment รวมถึง Production**
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty; // ทำให้ Swagger เป็นหน้าแรก (root path)
+});
 
 app.UseHttpsRedirection();
-
-app.UseSwagger();
-app.UseSwaggerUI();
-
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
