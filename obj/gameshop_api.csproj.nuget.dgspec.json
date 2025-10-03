@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\gameshop_api\\gameshop_api.csproj": {}
+    "d:\\gameshop_api\\gameshop_api.csproj": {}
   },
   "projects": {
-    "D:\\gameshop_api\\gameshop_api.csproj": {
+    "d:\\gameshop_api\\gameshop_api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\gameshop_api\\gameshop_api.csproj",
+        "projectUniqueName": "d:\\gameshop_api\\gameshop_api.csproj",
         "projectName": "gameshop_api",
-        "projectPath": "D:\\gameshop_api\\gameshop_api.csproj",
+        "projectPath": "d:\\gameshop_api\\gameshop_api.csproj",
         "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
-        "outputPath": "D:\\gameshop_api\\obj\\",
+        "outputPath": "d:\\gameshop_api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,13 +44,29 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.9, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.8, )"
             },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[9.4.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.14.0, )"
             }
           },
           "imports": [
