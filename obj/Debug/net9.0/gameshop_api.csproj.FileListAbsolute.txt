@@ -33,3 +33,4 @@ D:\gameshop_api\obj\Debug\net9.0\ref\gameshop_api.dll
 D:\gameshop_api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\gameshop_api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\gameshop_api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\gameshop_api\obj\Debug\net9.0\gameshop_api.sourcelink.json
