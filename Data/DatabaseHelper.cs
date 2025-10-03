@@ -1,12 +1,12 @@
 using MySql.Data.MySqlClient;
 
-namespace gameshop_api.Services
+namespace gameshop_api.Data
 {
-    public class DatabaseService
+    public class DatabaseHelper
     {
         private readonly string _connectionString;
 
-        public DatabaseService()
+        public DatabaseHelper()
         {
             _connectionString = "Server=202.28.34.203;Port=3306;Database=mb68_66011212118;Uid=mb68_66011212118;Pwd=CbJmLDN7hjTM;";
         }

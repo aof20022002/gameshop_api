@@ -1,4 +1,4 @@
-using gameshop_api.Services;
+using gameshop_api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,9 +6,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Database & Auth Services
-builder.Services.AddSingleton<DatabaseService>();
-builder.Services.AddScoped<AuthService>();
+// Add DatabaseHelper
+builder.Services.AddSingleton<DatabaseHelper>();
 
 // Add CORS
 builder.Services.AddCors(options =>
