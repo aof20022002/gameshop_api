@@ -2,7 +2,6 @@ using gameshop_api.Data;
 using gameshop_api.Models.req_res;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using BCrypt.Net;
 using System.Data;
 
 namespace gameshop_api.Controllers
