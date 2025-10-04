@@ -25,7 +25,7 @@ namespace gameshop_api.Controllers
                 using var connection = _db.GetConnection();
                 await connection.OpenAsync();
 
-                var query = "SELECT uid, email, password, fullname, role FROM User WHERE email = @email";
+                var query = "SELECT uid, email, password, fullname, profile_image, role FROM User WHERE email = @email";
                 using var cmd = new MySqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@email", request.Email);
 
@@ -37,7 +37,6 @@ namespace gameshop_api.Controllers
                 }
 
                 var passwordHash = reader.GetString("password");
-
 
                 if (!BCrypt.Net.BCrypt.Verify(request.Password, passwordHash))
                 {
@@ -49,9 +48,8 @@ namespace gameshop_api.Controllers
                     message = "Login สำเร็จ",
                     uid = reader.GetInt32("uid"),
                     email = reader.GetString("email"),
-                    password = reader.GetString("password"),
                     fullname = reader.GetString("fullname"),
-
+                    profile_image = reader.IsDBNull(reader.GetOrdinal("profile_image")) ? null : reader.GetString("profile_image"),
                     role = reader.GetString("role")
                 });
             }
@@ -61,47 +59,7 @@ namespace gameshop_api.Controllers
             }
         }
 
-        [HttpPost("admin/login")]
-        public async Task<IActionResult> AdminLogin(LoginRequest request)
-        {
-            try
-            {
-                using var connection = _db.GetConnection();
-                await connection.OpenAsync();
 
-                var query = "SELECT uid, email, password, fullname, phone, role FROM User WHERE email = @email AND role = 'admin'";
-                using var cmd = new MySqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@email", request.Email);
-
-                using var reader = await cmd.ExecuteReaderAsync();
-
-                if (!await reader.ReadAsync())
-                {
-                    return BadRequest(new { message = "คุณไม่มีสิทธิ์เข้าถึงระบบ Admin" });
-                }
-
-                var passwordHash = reader.GetString("password");
-
-                if (!BCrypt.Net.BCrypt.Verify(request.Password, passwordHash))
-                {
-                    return BadRequest(new { message = "Email หรือรหัสผ่านไม่ถูกต้อง" });
-                }
-
-                return Ok(new
-                {
-                    message = "Admin Login สำเร็จ",
-                    uid = reader.GetInt32("uid"),
-                    email = reader.GetString("email"),
-                    fullname = reader.GetString("fullname"),
-                    phone = reader.IsDBNull(reader.GetOrdinal("phone")) ? null : reader.GetString("phone"),
-                    role = reader.GetString("role")
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "เกิดข้อผิดพลาด", error = ex.Message });
-            }
-        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
