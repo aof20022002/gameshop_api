@@ -47,7 +47,7 @@ namespace gameshop_api.Controllers
                     return BadRequest(new { message = "อีเมลนี้ถูกใช้งานแล้ว" });
                 }
 
-                // Insert new user
+
                 var profileImage = string.IsNullOrWhiteSpace(request.ProfileImage) ? "default.png" : request.ProfileImage;
 
                 var insertQuery = @"INSERT INTO User (email, password, fullname, profile_image, role) 
@@ -55,7 +55,7 @@ namespace gameshop_api.Controllers
 
                 using var insertCmd = new MySqlCommand(insertQuery, connection);
                 insertCmd.Parameters.AddWithValue("@email", request.Email);
-                insertCmd.Parameters.AddWithValue("@password", request.Password); // ไม่ hash ตามที่ต้องการ
+                insertCmd.Parameters.AddWithValue("@password", request.Password);
                 insertCmd.Parameters.AddWithValue("@fullname", request.Fullname);
                 insertCmd.Parameters.AddWithValue("@profileImage", profileImage);
 
