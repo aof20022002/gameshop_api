@@ -36,9 +36,10 @@ namespace gameshop_api.Controllers
                     return BadRequest(new { message = "Email หรือรหัสผ่านไม่ถูกต้อง" });
                 }
 
-                var passwordHash = reader.GetString("password");
+                var passwordFromDb = reader.GetString("password");
 
-                if (!BCrypt.Net.BCrypt.Verify(request.Password, passwordHash))
+
+                if (request.Password != passwordFromDb)
                 {
                     return BadRequest(new { message = "Email หรือรหัสผ่านไม่ถูกต้อง" });
                 }
@@ -59,48 +60,6 @@ namespace gameshop_api.Controllers
             }
         }
 
-
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterRequest request)
-        {
-            try
-            {
-                using var connection = _db.GetConnection();
-                await connection.OpenAsync();
-
-                // ตรวจสอบ email ซ้ำ
-                var checkQuery = "SELECT COUNT(*) FROM User WHERE email = @email";
-                using var checkCmd = new MySqlCommand(checkQuery, connection);
-                checkCmd.Parameters.AddWithValue("@email", request.Email);
-                var exists = Convert.ToInt32(await checkCmd.ExecuteScalarAsync()) > 0;
-                if (exists)
-                {
-                    return BadRequest(new { message = "Email นี้มีผู้ใช้แล้ว" });
-                }
-
-                // Hash password
-                var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-                // Insert user 
-                var insertQuery = @"INSERT INTO User (email, password, fullname, phone, role)
-                            VALUES (@email, @password, @fullname, @phone, 'user');
-                            SELECT LAST_INSERT_ID();";
-                using var insertCmd = new MySqlCommand(insertQuery, connection);
-                insertCmd.Parameters.AddWithValue("@email", request.Email);
-                insertCmd.Parameters.AddWithValue("@password", passwordHash);
-                insertCmd.Parameters.AddWithValue("@fullname", request.Fullname);
-                insertCmd.Parameters.AddWithValue("@phone", request.Phone ?? (object)DBNull.Value);
-
-                var uid = Convert.ToInt32(await insertCmd.ExecuteScalarAsync());
-
-                return Ok(new { message = "สมัครสมาชิกสำเร็จ", uid = uid, email = request.Email, fullname = request.Fullname, role = "user" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "เกิดข้อผิดพลาด", error = ex.Message });
-            }
-        }
         [HttpGet("test")]
         public async Task<IActionResult> Test()
         {
