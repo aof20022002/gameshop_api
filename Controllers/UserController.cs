@@ -24,7 +24,7 @@ namespace gameshop_api.Controllers
                 using var connection = _db.GetConnection();
                 await connection.OpenAsync();
 
-                var query = "SELECT uid, fullname, email, phone, role FROM User";
+                var query = "SELECT uid, email,password,fullname, role FROM User";
                 using var cmd = new MySqlCommand(query, connection);
                 using var reader = await cmd.ExecuteReaderAsync();
 
@@ -35,9 +35,9 @@ namespace gameshop_api.Controllers
                     users.Add(new
                     {
                         uid = reader.GetInt32("uid"),
-                        fullname = reader.GetString("fullname"),
                         email = reader.GetString("email"),
-                        phone = reader.IsDBNull(reader.GetOrdinal("phone")) ? null : reader.GetString("phone"),
+                        password = reader.GetString("password"),
+                        fullname = reader.GetString("fullname"),
                         role = reader.GetString("role")
                     });
                 }

@@ -9,8 +9,7 @@ namespace gameshop_api.Models
         public string? email { get; set; }
         public string? password { get; set; }
         public string? fullname { get; set; }
-        public string? phone { get; set; }
         public string role { get; set; } = "user";
-        public DateTime created_at { get; set; }
+
     }
 }
