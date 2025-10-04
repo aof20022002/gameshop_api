@@ -9,14 +9,14 @@ builder.Services.AddSwaggerGen();
 // Add DatabaseHelper
 builder.Services.AddSingleton<DatabaseHelper>();
 
-// Add CORS
+// Add CORS 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
@@ -29,6 +29,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "GameShop API V1");
     c.RoutePrefix = string.Empty;
 });
+
 
 app.UseCors("AllowAll");
 app.UseAuthorization();
