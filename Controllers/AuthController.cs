@@ -25,7 +25,7 @@ namespace gameshop_api.Controllers
                 using var connection = _db.GetConnection();
                 await connection.OpenAsync();
 
-                var query = "SELECT uid, email, password, fullname, phone, role FROM User WHERE email = @email";
+                var query = "SELECT uid, email, password, fullname, role FROM User WHERE email = @email";
                 using var cmd = new MySqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@email", request.Email);
 
@@ -49,8 +49,9 @@ namespace gameshop_api.Controllers
                     message = "Login สำเร็จ",
                     uid = reader.GetInt32("uid"),
                     email = reader.GetString("email"),
+                    password = reader.GetString("password"),
                     fullname = reader.GetString("fullname"),
-                    phone = reader.IsDBNull(reader.GetOrdinal("phone")) ? null : reader.GetString("phone"),
+
                     role = reader.GetString("role")
                 });
             }
