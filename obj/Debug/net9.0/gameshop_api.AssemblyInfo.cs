@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("gameshop_api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b5afe8d97638c73a35548a2de02140f6ad6c692")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+edf7a36723614a54b2770f00a82269fe45d29482")]
 [assembly: System.Reflection.AssemblyProductAttribute("gameshop_api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("gameshop_api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
